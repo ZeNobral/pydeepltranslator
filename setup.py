@@ -4,7 +4,7 @@ setup(
     name='pydeepltranslator',
     version='0.1',
     packages=['pydeepltranslator'],
-    url='',
+    url='https://github.com/ZeNobral/pydeepltranslator',
     license='',
     author='bruno vial',
     author_email='bruno.vial@gmail.com',
