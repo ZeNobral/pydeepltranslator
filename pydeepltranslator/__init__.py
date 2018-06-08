@@ -30,7 +30,7 @@ class DeepLTranslatorApi:
         self.target_lang = target_lang
         self.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.jsonify = jsonify
-        self.retries = 5
+        self.retries = retries
         
     @property
     def source_lang(self):
@@ -88,7 +88,7 @@ class DeepLTranslatorApi:
                 sleep((i+1)*3)
                 continue
             break
-        content = json.loads(r_text, encoding='utf-8') if self.jsoninfy else r_text
+        content = json.loads(r_text, encoding='utf-8') if self.jsonify else r_text
         return content
 
     def translate_many(self, texts, max_threads=3):

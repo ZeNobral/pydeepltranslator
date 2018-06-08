@@ -36,12 +36,6 @@ class TestDeepLTranslatorApi(unittest.TestCase):
             text = 'test'
             mock_request.return_value.raise_for_status = self.raise_HTTPError(413)
             self.assertRaises(RequestEntityTooLarge, self.dt, text)
-            
-    def test__raise_too_many_requests(self):
-        with patch('requests.post') as mock_request:
-            text = 'test'
-            mock_request.return_value.raise_for_status = self.raise_HTTPError(429)
-            self.assertRaises(TooManyRequests, self.dt, text)
 
     def test_raise_quota_exceeded(self):
         with patch('requests.post') as mock_request:
