@@ -2,7 +2,8 @@ import unittest
 from unittest.mock import patch
 from requests.exceptions import HTTPError
 from requests import Response
-from pydeepltranslator import *
+from pydeepltranslator import DeepLTranslatorApi
+from pydeepltranslator.exceptions import *
 
 
 class TestDeepLTranslatorApi(unittest.TestCase):
@@ -56,3 +57,18 @@ class TestDeepLTranslatorApi(unittest.TestCase):
             res_json = self.dt(text)
             self.assertEqual(res_json['translations'][0]['detected_source_language'], 'DE')
             self.assertEqual(res_json['translations'][0]['text'], 'Hello World!')
+
+    def test_wrong_lang(self):
+        self.assertRaises(ValueError, setattr, self.dt, 'source_lang', 'BX')
+        self.assertRaises(ValueError, setattr, self.dt, 'target_lang', 'BX')
+
+    def test_lang_change(self):
+        original_source_lang = self.dt.source_lang
+        original_target_lang = self.dt.target_lang
+        self.dt.source_lang = 'IT'
+        self.dt.target_lang = 'EN'
+        self.assertEqual(self.dt.payload['source_lang'], 'IT')
+        self.assertEqual(self.dt.payload['target_lang'], 'EN')
+        self.dt.source_lang = original_source_lang
+        self.dt.target_lang = original_target_lang
+
